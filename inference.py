@@ -9,10 +9,16 @@ import matplotlib.pyplot as plt
 import os
 from PIL import Image
 from utils import *
+from preprocessing import *
 from model import *
 from train import *
 
-
+for images, masks in train_dataset.take(1):
+    for img, mask in zip(images, masks):
+        sample_image = img
+        sample_mask = mask
+        break
+        
 def visualize(display_list):
     plt.figure(figsize=(15, 15))
     title = ['Input Image', 'True Mask', 'Predicted Mask']
