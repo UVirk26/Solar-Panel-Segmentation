@@ -22,5 +22,19 @@ model.compile(optimizer='adam',
 
 print(model.summary())
 
+early_stop = tf.keras.callbacks.EarlyStopping(patience=4,restore_best_weights=True)
+
+class DisplayCallback(tf.keras.callbacks.Callback):
+    def on_epoch_begin(self, epoch, logs=None):
+            
+EPOCHS = 30
+STEPS_PER_EPOCH = TRAIN_LENGTH // BATCH_SIZE
+
+model_history = model.fit(train_dataset, epochs=EPOCHS,
+                          steps_per_epoch=STEPS_PER_EPOCH,
+                          validation_data=valid_dataset,
+                          callbacks=[DisplayCallback(), early_stop],
+                         )
+
 model.save_weights("model.h5")
 print("Saved model to disk")
